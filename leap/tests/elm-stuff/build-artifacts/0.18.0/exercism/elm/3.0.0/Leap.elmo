@@ -1,0 +1,10 @@
+var _exercism$elm$Leap$isDivisibleBy = F2(
+	function (start, factor) {
+		return _elm_lang$core$Native_Utils.eq(
+			A2(_elm_lang$core$Basics_ops['%'], start, factor),
+			0);
+	});
+var _exercism$elm$Leap$isLeapYear = function (year) {
+	var divByYear = _exercism$elm$Leap$isDivisibleBy(year);
+	return divByYear(4) ? (divByYear(100) ? divByYear(400) : true) : false;
+};
