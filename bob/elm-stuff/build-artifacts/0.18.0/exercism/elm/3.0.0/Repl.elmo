@@ -1,3 +1,2 @@
 var _exercism$elm$Repl$t_s_o_l = {ctor: '_Tuple0'};
-var _exercism$elm$Repl$d_e_l_t_r_o_n_3_0_3_0 = _exercism$elm$Bob$angry(
-	_exercism$elm$Bob$lastSentence('Wait! Hang on. Are you going to be OK?'));
+var _exercism$elm$Repl$d_e_l_t_r_o_n_3_0_3_0 = A2(_elm_lang$core$String$right, 1, 'hello?');

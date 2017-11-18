@@ -1,57 +1,37 @@
+var _exercism$elm$Bob$empty = function (phrase) {
+	return _elm_lang$core$String$isEmpty(
+		_elm_lang$core$String$trim(phrase));
+};
 var _exercism$elm$Bob$question = function (phrase) {
 	return _elm_lang$core$Native_Utils.eq(
-		A3(_elm_lang$core$String$slice, -2, -1, phrase),
+		A2(_elm_lang$core$String$right, 1, phrase),
 		'?');
 };
-var _exercism$elm$Bob$filterAbbs = function (phrase) {
-	return A2(
-		_elm_lang$core$String$join,
-		' ',
-		A2(
-			_elm_lang$core$List$filter,
-			function (word) {
-				return (!_elm_lang$core$Native_Utils.eq(word, 'DMV.')) && ((!_elm_lang$core$Native_Utils.eq(word, 'OK')) && (!_elm_lang$core$Native_Utils.eq(word, 'OK?')));
-			},
-			_elm_lang$core$String$words(phrase)));
-};
-var _exercism$elm$Bob$parseMaybe = function (str) {
-	var _p0 = str;
-	if (_p0.ctor === 'Nothing') {
-		return '';
-	} else {
-		return _p0._0;
-	}
-};
-var _exercism$elm$Bob$lastSentence = function (phrase) {
-	var sentances = _elm_lang$core$Array$fromList(
-		A2(_elm_lang$core$String$split, '.', phrase));
-	return _elm_lang$core$Native_Utils.eq(
-		_elm_lang$core$Array$length(sentances),
-		1) ? _exercism$elm$Bob$parseMaybe(
-		A2(_elm_lang$core$Array$get, 0, sentances)) : A2(
-		_elm_lang$core$String$dropLeft,
-		1,
-		_exercism$elm$Bob$parseMaybe(
-			A2(
-				_elm_lang$core$Array$get,
-				_elm_lang$core$Array$length(sentances) - 1,
-				A2(
-					_elm_lang$core$Array$filter,
-					function (w) {
-						return !_elm_lang$core$Native_Utils.eq(w, '');
-					},
-					sentances))));
-};
 var _exercism$elm$Bob$angry = function (phrase) {
-	return A2(
-		_elm_lang$core$Regex$contains,
-		_elm_lang$core$Regex$regex('[A-Z]'),
-		A2(
-			_elm_lang$core$String$dropLeft,
-			1,
-			_exercism$elm$Bob$filterAbbs(
-				_exercism$elm$Bob$lastSentence(phrase))));
+	return _elm_lang$core$Native_Utils.eq(
+		_elm_lang$core$String$toUpper(phrase),
+		phrase) && (!_elm_lang$core$Native_Utils.eq(
+		_elm_lang$core$String$toLower(phrase),
+		phrase));
+};
+var _exercism$elm$Bob$Other = {ctor: 'Other'};
+var _exercism$elm$Bob$Question = {ctor: 'Question'};
+var _exercism$elm$Bob$Empty = {ctor: 'Empty'};
+var _exercism$elm$Bob$Angry = {ctor: 'Angry'};
+var _exercism$elm$Bob$getPhraseType = function (phrase) {
+	return _exercism$elm$Bob$angry(phrase) ? _exercism$elm$Bob$Angry : (_exercism$elm$Bob$question(phrase) ? _exercism$elm$Bob$Question : (_exercism$elm$Bob$empty(phrase) ? _exercism$elm$Bob$Empty : _exercism$elm$Bob$Other));
 };
 var _exercism$elm$Bob$hey = function (phrase) {
-	return _exercism$elm$Bob$angry(phrase) ? 'Whoa, chill out!' : (_exercism$elm$Bob$question(phrase) ? 'Sure.' : 'Whatever.');
+	var phraseType = _exercism$elm$Bob$getPhraseType(phrase);
+	var _p0 = phraseType;
+	switch (_p0.ctor) {
+		case 'Angry':
+			return 'Whoa, chill out!';
+		case 'Question':
+			return 'Sure.';
+		case 'Empty':
+			return 'Fine. Be that way!';
+		default:
+			return 'Whatever.';
+	}
 };

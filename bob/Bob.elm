@@ -1,40 +1,40 @@
 module Bob exposing (..)
-import Regex exposing (contains, regex)
-import Array exposing (..)
--- gotta split the string on periods then take the last valid one
-
-
-parseMaybe : Maybe String -> String 
-parseMaybe str = 
-    case str of 
-        Nothing -> ""
-        Just str -> str 
-
-lastSentence : String -> String 
-lastSentence phrase = 
-    let sentances = 
-        Array.fromList (String.split "." phrase)
-    in 
-        if (Array.length sentances == 1) then 
-                parseMaybe (Array.get 0 sentances)
-            else 
-                String.dropLeft 1 (parseMaybe (Array.get (Array.length sentances - 1) (Array.filter (\w -> w /= "") sentances)))
-
-
-filterAbbs : String -> String 
-filterAbbs phrase = 
-    String.join " " (List.filter (\word -> word /= "DMV." && word /= "OK" && word /= "OK?") (String.words phrase))
+import String exposing (..)
 
 angry : String -> Bool
 angry phrase = 
-    contains (regex "[A-Z]") (String.dropLeft 1 (filterAbbs (lastSentence phrase))) 
+    (toUpper phrase == phrase) && (toLower phrase /= phrase)
 
 question : String -> Bool 
 question phrase = 
-    String.slice -2 -1 phrase == "?" 
+    right 1 phrase == "?" 
+
+empty : String -> Bool 
+empty phrase = 
+    isEmpty (trim phrase)
+
+type PhraseType = Angry | Empty | Question | Other 
+
+getPhraseType : String -> PhraseType 
+getPhraseType phrase = 
+    if (angry phrase) then
+        Angry
+    else if (question phrase) then
+        Question
+    else if (empty phrase) then
+        Empty
+    else 
+        Other
+
 
 hey : String -> String
-hey phrase = 
-    if (angry phrase) then "Whoa, chill out!" 
-    else if (question phrase) then "Sure."
-    else "Whatever."
+hey phrase =
+    let 
+        phraseType = 
+            getPhraseType phrase   
+    in 
+        case phraseType of 
+            Angry -> "Whoa, chill out!" 
+            Question -> "Sure."
+            Empty -> "Fine. Be that way!"
+            Other -> "Whatever."
