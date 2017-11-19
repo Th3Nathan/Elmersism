@@ -1,0 +1,22 @@
+var _exercism$elm$Pangram$removeNotAZ = function (strings) {
+	return A2(
+		_elm_lang$core$List$map,
+		function (_) {
+			return _.match;
+		},
+		A3(
+			_elm_lang$core$Regex$find,
+			_elm_lang$core$Regex$All,
+			_elm_lang$core$Regex$regex('[a-z]'),
+			strings));
+};
+var _exercism$elm$Pangram$isPangram = function (phrase) {
+	return function (set) {
+		return _elm_lang$core$Native_Utils.eq(
+			_elm_lang$core$Set$size(set),
+			26);
+	}(
+		_elm_lang$core$Set$fromList(
+			_exercism$elm$Pangram$removeNotAZ(
+				_elm_lang$core$String$toLower(phrase))));
+};
