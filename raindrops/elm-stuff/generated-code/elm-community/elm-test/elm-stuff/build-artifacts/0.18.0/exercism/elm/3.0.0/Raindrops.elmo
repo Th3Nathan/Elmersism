@@ -1,0 +1,21 @@
+var _exercism$elm$Raindrops$plXnger = F4(
+	function (letter, factor, input, collect) {
+		return _elm_lang$core$Native_Utils.eq(
+			A2(_elm_lang$core$Basics_ops['%'], input, factor),
+			0) ? A2(
+			_elm_lang$core$Basics_ops['++'],
+			collect,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				'Pl',
+				A2(_elm_lang$core$Basics_ops['++'], letter, 'ng'))) : collect;
+	});
+var _exercism$elm$Raindrops$raindrops = function ($int) {
+	var plong = A3(_exercism$elm$Raindrops$plXnger, 'o', 7, $int);
+	var plang = A3(_exercism$elm$Raindrops$plXnger, 'a', 5, $int);
+	var pling = A3(_exercism$elm$Raindrops$plXnger, 'i', 3, $int);
+	var worded = plong(
+		plang(
+			pling('')));
+	return _elm_lang$core$String$isEmpty(worded) ? _elm_lang$core$Basics$toString($int) : worded;
+};
